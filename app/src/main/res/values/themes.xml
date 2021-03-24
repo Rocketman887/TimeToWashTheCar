@@ -13,4 +13,13 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name = "bt_settings_theme">
+        <item name="android:background">@color/bright_gray</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name ="android:textAlignment">center</item>
+        <item name="android:height">56dp</item>
+        <item name="android:width">420dp</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
 </resources>
