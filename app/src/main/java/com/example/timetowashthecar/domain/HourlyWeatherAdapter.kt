@@ -2,6 +2,7 @@ package com.example.timetowashthecar.domain
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
 class HourlyWeatherAdapter (
     private var list: List<HourlyWeather>,
@@ -12,6 +13,11 @@ class HourlyWeatherAdapter (
         HourlyWeatherHolder.getInstance(parent)
 
     override fun onBindViewHolder(holder: HourlyWeatherHolder, position: Int) {
+        holder.mImageView?.let {
+            Glide.with(holder.itemView.getContext())
+                .load(list.get(position).iconUri)
+                .into(it)
+        }
         holder.bind(list[position])
     }
 

@@ -2,6 +2,8 @@ package com.example.timetowashthecar.presentation
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
@@ -17,15 +19,15 @@ import com.bumptech.glide.Glide
 import com.example.timetowashthecar.R
 import com.example.timetowashthecar.data.api.ApiFactory
 import com.example.timetowashthecar.data.models.WeatherPart
-import com.example.timetowashthecar.domain.HourlyWeather
-import com.example.timetowashthecar.domain.HourlyWeatherAdapter
-import com.example.timetowashthecar.domain.TemperatureConverter
+import com.example.timetowashthecar.domain.*
 import com.google.android.gms.location.LocationServices
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.coroutines.CoroutineContext
 
 const val BASE_IMAGE_URI = "http://openweathermap.org/img/wn/"
@@ -38,6 +40,7 @@ class HomeFragment() : Fragment(), CoroutineScope {
     private lateinit var hourlyWeatherList: ArrayList<HourlyWeather>
 
     private lateinit var temperatureConverter: TemperatureConverter
+    private lateinit var dateTimeConverter: DateTimeConverter
 
     private lateinit var ivDescription: ImageView
 
@@ -57,11 +60,16 @@ class HomeFragment() : Fragment(), CoroutineScope {
         super.onViewCreated(view, savedInstanceState)
 
         temperatureConverter = TemperatureConverter()
+        dateTimeConverter = DateTimeConverter()
 
         rv_hourly_weather.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
         getWeatherListAfterGrantedLocation()
+
+        bt_location.setOnClickListener{
+            getWeatherListAfterGrantedLocation()
+        }
 
 
     }
@@ -82,9 +90,14 @@ class HomeFragment() : Fragment(), CoroutineScope {
                     Log.d("Coords", "latitude: ${location.latitude.toFloat()}, longitude:${location.longitude.toFloat()}")
                     val weatherResponse = ApiFactory.getWeatherByCoord(location.latitude, location.longitude, WeatherPart.minutely)
 
+                    val geoCoder = Geocoder(context, Locale.getDefault())
+                    val addresses: List<Address> = geoCoder.getFromLocation(location.latitude, location.longitude, 1)
+                    val result = addresses[0]
+
                     activity?.runOnUiThread {
                         tv_description.text = weatherResponse.current.weather[0].description
                         tv_temperature.text = temperatureConverter.convert(weatherResponse.current.temp)
+                        tv_day_info.text = "${result.countryName}, ${result.adminArea},\n${dateTimeConverter.dayInfo()}"
                         context?.let {
                             Glide.with(it)
                                     .load("$BASE_IMAGE_URI${weatherResponse.current.weather[0].icon}.png".toUri()).into(iv_description)

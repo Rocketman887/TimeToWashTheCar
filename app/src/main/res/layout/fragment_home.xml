@@ -136,7 +136,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_hourly_weather"
         android:layout_width="356dp"
-        android:layout_height="64dp"
+        android:layout_height="80dp"
         android:background="@color/white"
         android:layout_centerVertical = "true"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
