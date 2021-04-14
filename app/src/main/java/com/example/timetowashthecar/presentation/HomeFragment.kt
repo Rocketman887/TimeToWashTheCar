@@ -41,6 +41,7 @@ class HomeFragment() : Fragment(), CoroutineScope {
 
     private lateinit var temperatureConverter: TemperatureConverter
     private lateinit var dateTimeConverter: DateTimeConverter
+    private lateinit var weatherIconHelper: WeatherIconHelper
 
     private lateinit var ivDescription: ImageView
 
@@ -61,6 +62,7 @@ class HomeFragment() : Fragment(), CoroutineScope {
 
         temperatureConverter = TemperatureConverter()
         dateTimeConverter = DateTimeConverter()
+        weatherIconHelper = WeatherIconHelper()
 
         rv_hourly_weather.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -98,10 +100,11 @@ class HomeFragment() : Fragment(), CoroutineScope {
                         tv_description.text = weatherResponse.current.weather[0].description
                         tv_temperature.text = temperatureConverter.convert(weatherResponse.current.temp)
                         tv_day_info.text = "${result.countryName}, ${result.adminArea},\n${dateTimeConverter.dayInfo()}"
-                        context?.let {
-                            Glide.with(it)
-                                    .load("$BASE_IMAGE_URI${weatherResponse.current.weather[0].icon}.png".toUri()).into(iv_description)
-                        }
+
+                        var backgroundDrawableName = weatherIconHelper.findPicture(weatherResponse.current.weather[0].icon)
+                        iv_description.setBackgroundResource(
+                            weatherIconHelper.getLayoutBackgroundDrawableId(backgroundDrawableName, R.drawable::class.java))
+
                     }
 
 
