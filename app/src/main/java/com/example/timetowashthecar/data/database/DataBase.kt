@@ -1,5 +1,4 @@
 package com.example.timetowashthecar.data.database
-/*
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
@@ -8,7 +7,8 @@ import androidx.room.RoomDatabase
 
 const val DATABASE_NAME = "com.timetowashthecar.weather.db"
 
-@Database(entities = [CachedCurrentWeather::class, CachedDailyWeather::class, CachedHourlyWeather::class], version = 1)
+@Database(entities = [CachedCurrentWeather::class, CachedDailyWeather::class,
+    CachedHourlyWeather::class,CachedResponseDetails::class], version = 1)
 abstract class DataBase : RoomDatabase() {
     companion object {
         private lateinit var sInstance: DataBase
@@ -24,5 +24,3 @@ abstract class DataBase : RoomDatabase() {
         }
     }
 }
-
- */

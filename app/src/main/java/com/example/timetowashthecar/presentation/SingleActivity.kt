@@ -14,7 +14,6 @@ class SingleActivity : AppCompatActivity() {
     private lateinit var homeFragment: HomeFragment
     private lateinit var carWashesFragment: CarWashesFragment
     private lateinit var settingsFragment: SettingsFragment
-    private lateinit var weatherAnalysisFragment: WeatherAnalysisFragment
 
     private lateinit var bottomNavigation: BottomNavigationView
 
@@ -28,8 +27,6 @@ class SingleActivity : AppCompatActivity() {
         homeFragment = HomeFragment()
         carWashesFragment = CarWashesFragment()
         settingsFragment = SettingsFragment()
-        weatherAnalysisFragment = WeatherAnalysisFragment()
-
         bottomNavigation = findViewById(R.id.bottom_nav)
 
         permissionHelper = PermissionHelper()
@@ -39,7 +36,6 @@ class SingleActivity : AppCompatActivity() {
         bottomNavigation.setOnNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.home -> swapFragments(homeFragment)
-                R.id.weather_analysis -> swapFragments(weatherAnalysisFragment)
                 R.id.car_washes -> swapFragments(carWashesFragment)
                 R.id.settings -> swapFragments(settingsFragment)
             }

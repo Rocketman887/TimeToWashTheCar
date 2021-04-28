@@ -12,13 +12,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.app.ActivityCompat
-import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import com.example.timetowashthecar.R
 import com.example.timetowashthecar.data.api.ApiFactory
-import com.example.timetowashthecar.data.models.WeatherPart
+import com.example.timetowashthecar.data.dto.WeatherPart
 import com.example.timetowashthecar.domain.*
 import com.google.android.gms.location.LocationServices
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -37,11 +35,11 @@ class HomeFragment() : Fragment(), CoroutineScope {
 
     override val coroutineContext: CoroutineContext = Dispatchers.IO + job
 
-    private lateinit var hourlyWeatherList: ArrayList<HourlyWeather>
+    private lateinit var hourlyWeatherItemList: ArrayList<HourlyWeatherItem>
 
     private lateinit var temperatureConverter: TemperatureConverter
     private lateinit var dateTimeConverter: DateTimeConverter
-    private lateinit var weatherIconHelper: WeatherIconHelper
+    private lateinit var weatherIconResolver: WeatherIconResolver
 
     private lateinit var ivDescription: ImageView
 
@@ -62,7 +60,7 @@ class HomeFragment() : Fragment(), CoroutineScope {
 
         temperatureConverter = TemperatureConverter()
         dateTimeConverter = DateTimeConverter()
-        weatherIconHelper = WeatherIconHelper()
+        weatherIconResolver = WeatherIconResolver()
 
         rv_hourly_weather.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -96,22 +94,29 @@ class HomeFragment() : Fragment(), CoroutineScope {
                     val addresses: List<Address> = geoCoder.getFromLocation(location.latitude, location.longitude, 1)
                     val result = addresses[0]
 
+                    val bundle = Bundle()
+                    bundle.putSerializable("resp",weatherResponse)
+
+                    bundle.putDouble("latitude",location.latitude)
+                    bundle.putDouble("longitude",location.longitude)
+                    arguments = bundle
+
                     activity?.runOnUiThread {
                         tv_description.text = weatherResponse.current.weather[0].description
-                        tv_temperature.text = temperatureConverter.convert(weatherResponse.current.temp)
+                        tv_temperature.text = temperatureConverter.degConvert(weatherResponse.current.temp)
                         tv_day_info.text = "${result.countryName}, ${result.adminArea},\n${dateTimeConverter.dayInfo()}"
 
-                        var backgroundDrawableName = weatherIconHelper.findPicture(weatherResponse.current.weather[0].icon)
+                        var backgroundDrawableName = weatherIconResolver.findPicture(weatherResponse.current.weather[0].icon)
                         iv_description.setBackgroundResource(
-                            weatherIconHelper.getLayoutBackgroundDrawableId(backgroundDrawableName, R.drawable::class.java))
+                            weatherIconResolver.getLayoutBackgroundDrawableId(backgroundDrawableName, R.drawable::class.java))
 
                     }
 
 
-                    hourlyWeatherList = ArrayList()
+                    hourlyWeatherItemList = ArrayList()
                     weatherResponse.hourly.forEach { hourly ->
-                        hourlyWeatherList.add(
-                                HourlyWeather(
+                        hourlyWeatherItemList.add(
+                                HourlyWeatherItem(
                                         hourly.dt,
                                         hourly.temp,
                                         "$BASE_IMAGE_URI${hourly.weather[0].icon}.png"
@@ -119,11 +124,9 @@ class HomeFragment() : Fragment(), CoroutineScope {
                         )
                     }
                     activity?.runOnUiThread {
-                        hourlyWeatherList.forEach() {
-                            rv_hourly_weather.adapter = HourlyWeatherAdapter(hourlyWeatherList)
-                            //context?.let { it1 -> Glide.with(it1).load(it.iconUri.toUri()).into(ivDescription) }
+                        hourlyWeatherItemList.forEach() {
+                            rv_hourly_weather.adapter = HourlyWeatherAdapter(hourlyWeatherItemList)
                         }
-
                     }
                 }
             }

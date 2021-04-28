@@ -17,15 +17,15 @@ class HourlyWeatherHolder(
 
     private var hourlyTimeConverter = HourlyTimeConverter()
     private var temperatureConverter = TemperatureConverter()
-    private var hourlyWeather: HourlyWeather? = null
+    private var hourlyWeatherItem: HourlyWeatherItem? = null
 
     var mImageView: ImageView? = itemView.findViewById(R.id.iv_weather)
 
     @SuppressLint("SetTextI18n")
-    fun bind(hourlyWeather: HourlyWeather) {
-        this.hourlyWeather = hourlyWeather
-        with(hourlyWeather) {
-            tv_hourly_temperature.text = temperatureConverter.convert(temp)
+    fun bind(hourlyWeatherItem: HourlyWeatherItem) {
+        this.hourlyWeatherItem = hourlyWeatherItem
+        with(hourlyWeatherItem) {
+            tv_hourly_temperature.text = temperatureConverter.degConvert(temp)
             tv_time.text = hourlyTimeConverter.convert(time)
         }
     }

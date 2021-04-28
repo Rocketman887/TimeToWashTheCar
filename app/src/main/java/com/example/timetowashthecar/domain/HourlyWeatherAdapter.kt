@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
 class HourlyWeatherAdapter (
-    private var list: List<HourlyWeather>,
+    private var list: List<HourlyWeatherItem>,
 
     ): RecyclerView.Adapter<HourlyWeatherHolder>() {
 
@@ -23,7 +23,7 @@ class HourlyWeatherAdapter (
 
     override fun getItemCount(): Int = list.size
 
-    fun updateDataList(newList: List<HourlyWeather>){
+    fun updateDataList(newList: List<HourlyWeatherItem>){
         list = newList
         notifyDataSetChanged()
     }

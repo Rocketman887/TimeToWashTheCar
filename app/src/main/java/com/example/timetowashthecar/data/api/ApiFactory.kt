@@ -1,8 +1,8 @@
 
 package com.example.timetowashthecar.data.api
 
-import com.example.timetowashthecar.data.models.WeatherPart
-import com.example.timetowashthecar.data.models.WeatherResponse
+import com.example.timetowashthecar.data.dto.WeatherPart
+import com.example.timetowashthecar.data.dto.WeatherResponse
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -60,7 +60,7 @@ object ApiFactory {
     val weatherApi:WeatherAPI by lazy{
         retrofit.create(WeatherAPI::class.java)
     }
-    suspend fun getWeatherByCoord(lat:Double,lon:Double,exclude:WeatherPart): WeatherResponse {
+    suspend fun getWeatherByCoord(lat:Double,lon:Double,exclude: WeatherPart): WeatherResponse {
         return weatherApi.getWeatherByCoord(lat, lon, exclude)
     }
 
