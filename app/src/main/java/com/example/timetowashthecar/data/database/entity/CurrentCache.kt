@@ -1,11 +1,11 @@
-package com.example.timetowashthecar.data.entity
+package com.example.timetowashthecar.data.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "current_cache")
-class CurrentCache (
+class CurrentCache(
     @PrimaryKey
     @ColumnInfo(name = "id")
     val id: Int,
@@ -22,7 +22,7 @@ class CurrentCache (
     @ColumnInfo(name = "last_wind_speed")
     val lastWindSpeed:Int,
     @ColumnInfo(name = "icon_id")
-    val iconId:Int,
+    val iconId: String,
     @ColumnInfo(name = "description")
     val description:String,
     @ColumnInfo(name = "last_analysis_result")

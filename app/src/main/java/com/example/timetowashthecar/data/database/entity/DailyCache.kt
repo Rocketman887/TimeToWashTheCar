@@ -1,4 +1,4 @@
-package com.example.timetowashthecar.data.entity
+package com.example.timetowashthecar.data.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -14,7 +14,7 @@ class DailyCache (
     @ColumnInfo(name = "temp")
     val temp: Int,
     @ColumnInfo(name = "icon_id")
-    val iconId: Int,
+    val iconId: String,
     @ColumnInfo(name = "main")
-    val main:String,
+    val main:String
         )

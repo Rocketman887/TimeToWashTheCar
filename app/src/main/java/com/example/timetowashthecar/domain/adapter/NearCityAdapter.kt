@@ -1,15 +1,16 @@
-package com.example.timetowashthecar.domain
+package com.example.timetowashthecar.domain.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.timetowashthecar.domain.dto.NearCityItem
 
 class NearCityAdapter(
     private var list: List<NearCityItem>,
-    //private val itemClick: (Double,Double)->Unit
+    private val itemClick: (nearCityItem:NearCityItem) -> Unit
     ): RecyclerView.Adapter<NearCityHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NearCityHolder {
-        return NearCityHolder.getInstance(parent)//.also { it.itemClick = itemClick }
+        return NearCityHolder.getInstance(parent,itemClick)
     }
 
     override fun onBindViewHolder(holder: NearCityHolder, position: Int) {

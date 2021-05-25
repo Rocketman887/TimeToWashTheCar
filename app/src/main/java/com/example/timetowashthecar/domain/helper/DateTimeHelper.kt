@@ -1,4 +1,4 @@
-package com.example.timetowashthecar.domain
+package com.example.timetowashthecar.domain.helper
 
 import android.annotation.SuppressLint
 import java.text.SimpleDateFormat

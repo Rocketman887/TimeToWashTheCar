@@ -1,9 +1,9 @@
 
 package com.example.timetowashthecar.data.api
 
-import com.example.timetowashthecar.data.dto.CoordResponse
-import com.example.timetowashthecar.data.dto.WeatherPart
-import com.example.timetowashthecar.data.dto.OneCallWeatherResponse
+import com.example.timetowashthecar.data.api.response.CoordResponse
+import com.example.timetowashthecar.data.api.response.WeatherPart
+import com.example.timetowashthecar.data.api.response.OneCallWeatherResponse
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

@@ -1,4 +1,4 @@
-package com.example.timetowashthecar.domain
+package com.example.timetowashthecar.domain.dto
 
 
 data class CityChoiceItem (

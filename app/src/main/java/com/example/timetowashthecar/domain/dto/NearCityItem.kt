@@ -1,4 +1,4 @@
- package com.example.timetowashthecar.domain
+ package com.example.timetowashthecar.domain.dto
 
 
 class NearCityItem (var id:Int,

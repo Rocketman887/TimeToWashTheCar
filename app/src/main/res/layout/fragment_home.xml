@@ -30,10 +30,11 @@
 
         <TextView
             android:id="@+id/tv_day_info"
-            android:layout_width="256dp"
+            android:layout_width="272dp"
             android:layout_height="match_parent"
-            android:text="Казань, Россия, 12 декабря,понедельник"
-            android:textSize="22sp"
+            tools:text="Казань, Россия, 12 декабря,понедельник"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/bt_find_wash"
             app:layout_constraintHorizontal_chainStyle="spread"

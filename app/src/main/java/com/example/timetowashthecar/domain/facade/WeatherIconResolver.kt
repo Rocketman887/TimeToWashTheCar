@@ -1,4 +1,4 @@
-package com.example.timetowashthecar.domain
+package com.example.timetowashthecar.domain.facade
 
 import com.example.timetowashthecar.R
 import java.lang.reflect.Field

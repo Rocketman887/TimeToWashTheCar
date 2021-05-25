@@ -1,8 +1,9 @@
-package com.example.timetowashthecar.domain
+package com.example.timetowashthecar.domain.dto
 
 
 data class DailyDTO(
     var temp:Int,
-    var imageUri: String,
-    var date:String
-)
+    var icon_id: String,
+    var date:String,
+    val main:String
+    )

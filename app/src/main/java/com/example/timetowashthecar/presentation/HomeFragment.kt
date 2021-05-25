@@ -16,11 +16,17 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.timetowashthecar.R
 import com.example.timetowashthecar.data.api.ApiFactory
-import com.example.timetowashthecar.data.dto.WeatherPart
-import com.example.timetowashthecar.domain.*
+import com.example.timetowashthecar.data.api.response.WeatherPart
+import com.example.timetowashthecar.domain.adapter.DailyAdapter
+import com.example.timetowashthecar.domain.dto.DailyItem
+import com.example.timetowashthecar.domain.dto.WeeklyAnalyzeDTO
+import com.example.timetowashthecar.domain.facade.ThemeImageViewResolver
+import com.example.timetowashthecar.domain.facade.WeatherAnalyzeFacade
+import com.example.timetowashthecar.domain.facade.WeatherIconResolver
+import com.example.timetowashthecar.domain.helper.DateTimeHelper
+import com.example.timetowashthecar.domain.helper.WeatherHelper
 import com.google.android.gms.location.LocationServices
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_home.bt_location
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -38,13 +44,10 @@ class HomeFragment() : Fragment(), CoroutineScope {
     private lateinit var listDTO: ArrayList<WeeklyAnalyzeDTO>
 
     private lateinit var weatherAnalyzeFacade: WeatherAnalyzeFacade
-    private lateinit var temperatureConverter: TemperatureConverter
-    private lateinit var dateTimeConverter: DateTimeConverter
+    private lateinit var dateTimeHelper: DateTimeHelper
     private lateinit var weatherIconResolver: WeatherIconResolver
-    private lateinit var pressureConverter: PressureConverter
-    private lateinit var humidityConverter: HumidityConverter
-    private lateinit var windSpeedConverter: WindSpeedConverter
-    private lateinit var mainImageViewResolver: MainImageViewResolver
+    private lateinit var weatherHelper: WeatherHelper
+    private lateinit var themeImageViewResolver: ThemeImageViewResolver
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,13 +64,10 @@ class HomeFragment() : Fragment(), CoroutineScope {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        temperatureConverter = TemperatureConverter()
-        dateTimeConverter = DateTimeConverter()
+        dateTimeHelper = DateTimeHelper()
+        weatherHelper = WeatherHelper()
         weatherIconResolver = WeatherIconResolver()
-        pressureConverter = PressureConverter()
-        humidityConverter = HumidityConverter()
-        windSpeedConverter = WindSpeedConverter()
-        mainImageViewResolver = MainImageViewResolver()
+        themeImageViewResolver = ThemeImageViewResolver()
 
         rv_hourly_weather.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -97,18 +97,13 @@ class HomeFragment() : Fragment(), CoroutineScope {
                     .checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED
             ) {
-                Log.d("hi", "error")
                 return
             }
             mFusedLocationClient.lastLocation.addOnSuccessListener(activity) { location: Location ->
                 launch {
-                    Log.d(
-                        "Coords",
-                        "latitude: ${location.latitude.toFloat()}, longitude:${location.longitude.toFloat()}"
-                    )
+
                     val weatherResponse = ApiFactory.getWeatherByCoord(
-                        location.latitude,
-                        location.longitude,
+                        location.latitude, location.longitude,
                         WeatherPart.minutely
                     )
 
@@ -120,31 +115,30 @@ class HomeFragment() : Fragment(), CoroutineScope {
                     activity?.runOnUiThread {
                         tv_description.text = weatherResponse.current.weather[0].description
                         tv_day_temperature.text =
-                            temperatureConverter.degConvert(weatherResponse.daily[0].temp.day)
+                            "${weatherHelper.degConvert(weatherResponse.daily[0].temp.day)}°"
                         tv_day_info.text =
-                            "${result.countryName}, ${result.adminArea},\n${dateTimeConverter.dayInfo()}"
+                            "${result.countryName}, ${result.adminArea},\n${dateTimeHelper.dayInfo()}"
 
                         tv_feels_like_temperature.text =
-                            temperatureConverter.degConvert(weatherResponse.daily[0].temp.night)
+                            "${weatherHelper.degConvert(weatherResponse.daily[0].temp.night)}°"
                         tv_wp2_pressure.text =
-                            pressureConverter.convert(weatherResponse.current.pressure)
-                        tv_wp2_humidity.text =
-                            humidityConverter.convert(weatherResponse.current.humidity)
+                            "${weatherHelper.pressureConvert(weatherResponse.current.pressure).toString()}mmHG"
+                        tv_wp2_humidity.text = "${weatherResponse.current.humidity}%"
                         tv_wp2_wind_speed.text =
-                            windSpeedConverter.convert(weatherResponse.current.wind_speed)
+                            "${weatherHelper.windSpeedConvert(weatherResponse.current.wind_speed)}m/s"
 
                         var backgroundDrawableName =
                             weatherIconResolver.findPicture(weatherResponse.current.weather[0].icon)
                         iv_description.setBackgroundResource(backgroundDrawableName)
 
-                        iv_car.setImageResource(mainImageViewResolver.findPicture(weatherResponse.current.weather[0].main))
+                        iv_car.setImageResource(themeImageViewResolver.findPicture(weatherResponse.current.weather[0].main))
 
                         listDTO = ArrayList()
                         weatherResponse.daily.forEach { daily ->
                             listDTO.add(
                                 WeeklyAnalyzeDTO(
-                                    temperatureConverter.degConvertToInt(daily.temp.day),
-                                    dateTimeConverter.convert(daily.dt),
+                                    weatherHelper.degConvert(daily.temp.day),
+                                    dateTimeHelper.convert(daily.dt),
                                     daily.weather[0].main,
                                     false
                                 )

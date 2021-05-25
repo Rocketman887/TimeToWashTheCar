@@ -1,4 +1,4 @@
-package com.example.timetowashthecar.domain
+package com.example.timetowashthecar.domain.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.timetowashthecar.R
+import com.example.timetowashthecar.domain.dto.CityChoiceItem
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.car_wash_item.*
 import kotlinx.android.synthetic.main.city_item.*
 
 class CityChoiceHolder(
     override val containerView: View,
-    private val itemClick: (id:Int) -> Unit
+    private val itemClick: (city:String) -> Unit
 ) : RecyclerView.ViewHolder(containerView),
     LayoutContainer {
 
@@ -22,7 +22,7 @@ class CityChoiceHolder(
     fun bind(cityChoiceItem: CityChoiceItem) {
         this.cityChoiceItem = cityChoiceItem
         itemView.setOnClickListener {
-            itemClick(cityChoiceItem.id)
+            itemClick(cityChoiceItem.city)
         }
         with(cityChoiceItem) {
             tv_city_item.text = "${cityChoiceItem.city}, ${cityChoiceItem.country}"
@@ -30,7 +30,7 @@ class CityChoiceHolder(
     }
 
     companion object {
-        fun getInstance(parent: ViewGroup, itemClick: (id:Int) -> Unit) = CityChoiceHolder(
+        fun getInstance(parent: ViewGroup, itemClick:(city:String) -> Unit) = CityChoiceHolder(
             LayoutInflater.from(parent.context).inflate(
                 R.layout.city_item, parent, false),itemClick)
     }

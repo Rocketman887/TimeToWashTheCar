@@ -1,15 +1,13 @@
-package com.example.timetowashthecar.domain
+package com.example.timetowashthecar.domain.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.timetowashthecar.R
+import com.example.timetowashthecar.domain.dto.CarWashItem
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.car_wash_item.*
-import kotlinx.android.synthetic.main.city_item.*
-import kotlinx.android.synthetic.main.rl_weekly_weather.*
 
 class CarWashHolder(
     override val containerView: View,

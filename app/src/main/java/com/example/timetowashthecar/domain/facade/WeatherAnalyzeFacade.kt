@@ -1,15 +1,16 @@
-package com.example.timetowashthecar.domain
+package com.example.timetowashthecar.domain.facade
 
+import com.example.timetowashthecar.domain.helper.DateTimeHelper
 import com.example.timetowashthecar.domain.dto.WeeklyAnalyzeDTO
-import com.example.timetowashthecar.domain.implementations.WeatherDescriptionFilterImpl
-import com.example.timetowashthecar.domain.implementations.WeatherTemperatureFilterImpl
+import com.example.timetowashthecar.domain.facade.implementations.WeatherDescriptionFilterImpl
+import com.example.timetowashthecar.domain.facade.implementations.WeatherTemperatureFilterImpl
 
 class WeatherAnalyzeFacade {
     private val weatherDescriptionFilter = WeatherDescriptionFilterImpl()
     private val weatherTemperatureFilter = WeatherTemperatureFilterImpl()
     private var resultDate: String? = null
     companion object{
-        private val dateTimeConverter = DateTimeConverter()
+        private val dateTimeConverter = DateTimeHelper()
         var todayDate = dateTimeConverter.dayInfo()
     }
     fun analyze(listDTO:List<WeeklyAnalyzeDTO>):String{

@@ -1,7 +1,7 @@
-package com.example.timetowashthecar.domain.implementations
+package com.example.timetowashthecar.domain.facade.implementations
 
 import com.example.timetowashthecar.domain.dto.WeeklyAnalyzeDTO
-import com.example.timetowashthecar.domain.interfacies.WeatherDescriptionFilter
+import com.example.timetowashthecar.domain.facade.interfacies.WeatherDescriptionFilter
 
 class WeatherDescriptionFilterImpl:WeatherDescriptionFilter {
     companion object{

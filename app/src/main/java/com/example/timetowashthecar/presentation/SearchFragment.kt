@@ -14,15 +14,18 @@ import android.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.timetowashthecar.R
 import com.example.timetowashthecar.data.api.ApiFactory
+import com.example.timetowashthecar.data.database.entity.TimeToWashTheCarDataBase
+import com.example.timetowashthecar.data.repository.AppRepository
 import com.example.timetowashthecar.data.repository.Repository
-import com.example.timetowashthecar.domain.NearCityAdapter
-import com.example.timetowashthecar.domain.NearCityItem
-import com.example.timetowashthecar.domain.PermissionHelper
+import com.example.timetowashthecar.domain.adapter.NearCityAdapter
+import com.example.timetowashthecar.domain.dto.NearCityItem
+import com.example.timetowashthecar.domain.helper.PermissionHelper
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
@@ -36,7 +39,6 @@ class SearchFragment() : Fragment(), CoroutineScope {
 
     private val api = ApiFactory.weatherApi
 
-    private lateinit var repository: Repository
 
     private lateinit var permissionHelper: PermissionHelper
 
@@ -47,6 +49,7 @@ class SearchFragment() : Fragment(), CoroutineScope {
     private lateinit var city: String
     private lateinit var listDTO:ArrayList<NearCityItem>
 
+    private lateinit var repository: AppRepository
     private var cord_latitude:Double? = null
     private var cord_longitude:Double? = null
 
@@ -149,7 +152,9 @@ class SearchFragment() : Fragment(), CoroutineScope {
                             }
                             activity?.runOnUiThread {
                                 listDTO.forEach {
-                                    recyclerView.adapter = NearCityAdapter(listDTO)
+                                    recyclerView.adapter = NearCityAdapter(listDTO){
+                                            onChoiceLocation(it)
+                                        }
                                     }
                                 }
                             }
@@ -158,4 +163,10 @@ class SearchFragment() : Fragment(), CoroutineScope {
                 }
             }
     }
+    private fun onChoiceLocation(nearCityItem: NearCityItem){
+        val bundle = Bundle()
+
+        findNavController().navigate(R.id.action_searchFragment_to_homeFragment,bundle)
+    }
+
 }

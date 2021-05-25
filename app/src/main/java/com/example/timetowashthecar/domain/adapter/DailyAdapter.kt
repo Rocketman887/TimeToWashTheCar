@@ -1,7 +1,8 @@
-package com.example.timetowashthecar.domain
+package com.example.timetowashthecar.domain.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.timetowashthecar.domain.dto.DailyItem
 
 class DailyAdapter (
     private var list: List<DailyItem>,

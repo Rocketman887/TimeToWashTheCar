@@ -1,12 +1,12 @@
 package com.example.timetowashthecar.data.repository
 
 import com.example.timetowashthecar.data.api.WeatherAPI
-import com.example.timetowashthecar.data.dto.NearCityListResponse
-import com.example.timetowashthecar.data.dto.CoordResponse
-import com.example.timetowashthecar.data.dto.WeatherPart
-import com.example.timetowashthecar.data.dto.OneCallWeatherResponse
+import com.example.timetowashthecar.data.api.response.NearCityListResponse
+import com.example.timetowashthecar.data.api.response.CoordResponse
+import com.example.timetowashthecar.data.api.response.WeatherPart
+import com.example.timetowashthecar.data.api.response.OneCallWeatherResponse
 
-abstract class RetrofitDataSource(private val weatherAPI: WeatherAPI): RemoteDataSource {
+class RetrofitDataSource(private val weatherAPI: WeatherAPI): RemoteDataSource {
    override suspend fun getOneCallWeather(lat:Double, lon:Double):
            OneCallWeatherResponse = weatherAPI.getWeatherByCoord(lat,lon, WeatherPart.minutely)
 

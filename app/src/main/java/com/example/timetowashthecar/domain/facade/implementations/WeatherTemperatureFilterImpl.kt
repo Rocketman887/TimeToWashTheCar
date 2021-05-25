@@ -1,7 +1,7 @@
-package com.example.timetowashthecar.domain.implementations
+package com.example.timetowashthecar.domain.facade.implementations
 
 import com.example.timetowashthecar.domain.dto.WeeklyAnalyzeDTO
-import com.example.timetowashthecar.domain.interfacies.WeatherTemperatureFilter
+import com.example.timetowashthecar.domain.facade.interfacies.WeatherTemperatureFilter
 
 class WeatherTemperatureFilterImpl:WeatherTemperatureFilter {
     override fun doFilter(listDTO:List<WeeklyAnalyzeDTO>):List<WeeklyAnalyzeDTO>{

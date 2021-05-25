@@ -1,7 +1,8 @@
-package com.example.timetowashthecar.domain
+package com.example.timetowashthecar.domain.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.timetowashthecar.domain.dto.CarWashItem
 
 class CarWashAdapter (
     private var list: List<CarWashItem>,
@@ -9,7 +10,7 @@ class CarWashAdapter (
     ): RecyclerView.Adapter<CarWashHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CarWashHolder =
-            CarWashHolder.getInstance(parent,itemClick)
+            CarWashHolder.getInstance(parent, itemClick)
 
         override fun onBindViewHolder(holder: CarWashHolder, position: Int) {
             holder.bind(list[position])

@@ -1,4 +1,4 @@
-package com.example.timetowashthecar.data.entity
+package com.example.timetowashthecar.data.database.entity
 
 import androidx.room.*
 

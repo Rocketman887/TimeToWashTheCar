@@ -2,7 +2,7 @@ package com.example.timetowashthecar.domain.facade
 
 import com.example.timetowashthecar.R
 
-class MainImageViewResolver {
+class ThemeImageViewResolver {
     fun findPicture(main: String): Int {
         return when (main) {
             "Clouds" -> R.drawable.cloud_case

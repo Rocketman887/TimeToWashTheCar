@@ -1,4 +1,4 @@
-package com.example.timetowashthecar.domain.interfacies
+package com.example.timetowashthecar.domain.facade.interfacies
 
 import com.example.timetowashthecar.domain.dto.WeeklyAnalyzeDTO
 

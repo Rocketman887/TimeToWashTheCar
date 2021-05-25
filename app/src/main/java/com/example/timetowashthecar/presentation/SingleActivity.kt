@@ -6,7 +6,7 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import com.example.timetowashthecar.R
-import com.example.timetowashthecar.domain.PermissionHelper
+import com.example.timetowashthecar.domain.helper.PermissionHelper
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -29,12 +29,6 @@ class SingleActivity : AppCompatActivity() {
         super.onStart()
         permissionHelper.check(this)
     }
-   /* private fun swapFragments(fragment:Fragment){
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.fl_wrapper,fragment)
-            commit()
-        }
-    }*/
     private val navController by lazy {
         (supportFragmentManager.findFragmentById(R.id.host_fragment) as NavHostFragment).navController
     }

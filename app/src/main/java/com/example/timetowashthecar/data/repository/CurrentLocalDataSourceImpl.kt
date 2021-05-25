@@ -1,7 +1,7 @@
 package com.example.timetowashthecar.data.repository
 
-import com.example.timetowashthecar.data.database.CurrentCache
-import com.example.timetowashthecar.data.database.CurrentDao
+import com.example.timetowashthecar.data.database.entity.CurrentCache
+import com.example.timetowashthecar.data.database.entity.CurrentDao
 
 class CurrentLocalDataSourceImpl(private val currentDao: CurrentDao): CurrentLocalDataSource {
     override suspend fun getLastCurrentData(): CurrentCache = currentDao.getCurrentCache()

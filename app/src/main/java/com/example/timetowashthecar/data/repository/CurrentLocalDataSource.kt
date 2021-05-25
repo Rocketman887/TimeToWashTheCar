@@ -1,6 +1,6 @@
 package com.example.timetowashthecar.data.repository
 
-import com.example.timetowashthecar.data.database.CurrentCache
+import com.example.timetowashthecar.data.database.entity.CurrentCache
 
 interface CurrentLocalDataSource {
     suspend fun getLastCurrentData(): CurrentCache

@@ -1,4 +1,4 @@
-package com.example.timetowashthecar.data.entity
+package com.example.timetowashthecar.data.database.entity
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
@@ -8,6 +8,9 @@ const val DATABASE_NAME = "com.timetowashthecar.weather.db"
 
 @Database(entities = [CurrentCache::class, DailyCache::class, MapCache::class], version = 1)
 abstract class TimeToWashTheCarDataBase : RoomDatabase() {
+    abstract fun mapDao(): MapDao
+    abstract fun dailyDao():DailyDao
+    abstract fun currentDao():CurrentDao
     companion object {
         private lateinit var sInstance: TimeToWashTheCarDataBase
         @Synchronized

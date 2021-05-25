@@ -1,11 +1,11 @@
 package com.example.timetowashthecar.data.repository
 
-import com.example.timetowashthecar.data.entity.*
-import com.example.timetowashthecar.data.dto.CoordResponse
-import com.example.timetowashthecar.data.dto.NearCityListResponse
-import com.example.timetowashthecar.data.dto.OneCallWeatherResponse
+import com.example.timetowashthecar.data.database.entity.*
+import com.example.timetowashthecar.data.api.response.CoordResponse
+import com.example.timetowashthecar.data.api.response.NearCityListResponse
+import com.example.timetowashthecar.data.api.response.OneCallWeatherResponse
 
-class LocalRepository (
+class Repository (
     private val remoteDataSource: RetrofitDataSource,
     private val currentLocalDataSource: CurrentLocalDataSourceImpl,
     private val dailyLocalDataSource: DailyLocalDataSourceImpl,

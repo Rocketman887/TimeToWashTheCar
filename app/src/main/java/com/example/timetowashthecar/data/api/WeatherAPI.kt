@@ -1,9 +1,9 @@
 package com.example.timetowashthecar.data.api
 
-import com.example.timetowashthecar.data.dto.NearCityListResponse
-import com.example.timetowashthecar.data.dto.CoordResponse
-import com.example.timetowashthecar.data.dto.WeatherPart
-import com.example.timetowashthecar.data.dto.OneCallWeatherResponse
+import com.example.timetowashthecar.data.api.response.NearCityListResponse
+import com.example.timetowashthecar.data.api.response.CoordResponse
+import com.example.timetowashthecar.data.api.response.WeatherPart
+import com.example.timetowashthecar.data.api.response.OneCallWeatherResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

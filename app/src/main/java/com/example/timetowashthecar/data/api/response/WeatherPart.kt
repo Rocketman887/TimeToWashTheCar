@@ -1,4 +1,4 @@
-package com.example.timetowashthecar.data.api.dto
+package com.example.timetowashthecar.data.api.response
 
 enum class WeatherPart {
     current,

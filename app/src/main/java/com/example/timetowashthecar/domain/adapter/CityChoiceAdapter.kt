@@ -1,15 +1,16 @@
-package com.example.timetowashthecar.domain
+package com.example.timetowashthecar.domain.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.timetowashthecar.domain.dto.CityChoiceItem
 
 class CityChoiceAdapter (
     private var list: List<CityChoiceItem>,
-    private val itemClick: (id:Int) -> Unit
+    private val itemClick: (city:String) -> Unit
     ): RecyclerView.Adapter<CityChoiceHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CityChoiceHolder =
-            CityChoiceHolder.getInstance(parent,itemClick)
+            CityChoiceHolder.getInstance(parent, itemClick)
 
         override fun onBindViewHolder(holder: CityChoiceHolder, position: Int) {
             holder.bind(list[position])

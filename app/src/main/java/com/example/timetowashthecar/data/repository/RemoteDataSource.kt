@@ -1,8 +1,8 @@
 package com.example.timetowashthecar.data.repository
 
-import com.example.timetowashthecar.data.dto.NearCityListResponse
-import com.example.timetowashthecar.data.dto.CoordResponse
-import com.example.timetowashthecar.data.dto.OneCallWeatherResponse
+import com.example.timetowashthecar.data.api.response.NearCityListResponse
+import com.example.timetowashthecar.data.api.response.CoordResponse
+import com.example.timetowashthecar.data.api.response.OneCallWeatherResponse
 
 interface RemoteDataSource {
 

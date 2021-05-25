@@ -1,4 +1,4 @@
-package com.example.timetowashthecar.data.entity
+package com.example.timetowashthecar.data.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -9,10 +9,10 @@ class MapCache (
     @PrimaryKey
     @ColumnInfo(name = "id")
     val id: Int,
-    @ColumnInfo(name = "lon")
-    val lon: Double,
     @ColumnInfo(name = "lat")
     val lat: Double,
+    @ColumnInfo(name = "lon")
+    val lon: Double,
     @ColumnInfo(name = "name")
     val name: String,
     @ColumnInfo(name = "rate")
@@ -23,6 +23,4 @@ class MapCache (
     var country:String,
     @ColumnInfo(name="address")
     val address: String
-) {
-
-}
+)
